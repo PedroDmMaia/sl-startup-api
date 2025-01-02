@@ -1,5 +1,6 @@
 import { Entity } from 'src/core/entities/entity'
 import { UniqueEntityid } from 'src/core/entities/unique-entity-id'
+import { Optional } from 'src/core/types/optional'
 
 export interface employeeProps {
   name: string
@@ -41,6 +42,21 @@ export class Employee extends Entity<employeeProps> {
     this.props.updatedAt = new Date()
   }
 
+  set name(name: string) {
+    this.props.name = name
+    this.touch()
+  }
+
+  set cpf(cpf: string) {
+    this.props.cpf = cpf
+    this.touch()
+  }
+
+  set rg(rg: string) {
+    this.props.rg = rg
+    this.touch()
+  }
+
   set email(email: string) {
     this.props.email = email
     this.touch()
@@ -56,7 +72,10 @@ export class Employee extends Entity<employeeProps> {
     this.touch()
   }
 
-  static create(props: employeeProps, id?: UniqueEntityid) {
+  static create(
+    props: Optional<employeeProps, 'createdAt' | 'isActive'>,
+    id?: UniqueEntityid,
+  ) {
     const employee = new Employee(
       {
         ...props,

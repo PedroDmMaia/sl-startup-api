@@ -1,14 +1,14 @@
 import { Entity } from 'src/core/entities/entity'
 import { UniqueEntityid } from 'src/core/entities/unique-entity-id'
 
-export interface bankDetailsProps {
+export interface bankProps {
   empoyeeId: UniqueEntityid
   bankName: string
   agencyNumber: string
   accountNumber: string
 }
 
-export class BankDetails extends Entity<bankDetailsProps> {
+export class Bank extends Entity<bankProps> {
   get empoyeeId() {
     return this.props.empoyeeId
   }
@@ -37,8 +37,8 @@ export class BankDetails extends Entity<bankDetailsProps> {
     this.props.accountNumber = accountNumber
   }
 
-  static create(props: bankDetailsProps, id?: UniqueEntityid) {
-    const bankDetails = new BankDetails(
+  static create(props: bankProps, id?: UniqueEntityid) {
+    const bankDetails = new Bank(
       {
         ...props,
       },
