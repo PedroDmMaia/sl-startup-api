@@ -7,6 +7,7 @@ interface UpdateEmployeeUseCaseResquest {
   rg: string
   email: string
   phoneNumber: string
+  isActive: boolean
 }
 
 export class UpdateEmployeeUseCase {
@@ -19,6 +20,7 @@ export class UpdateEmployeeUseCase {
     rg,
     email,
     phoneNumber,
+    isActive,
   }: UpdateEmployeeUseCaseResquest) {
     const employee = await this.employeeRepository.findById(employeeId)
 
@@ -31,6 +33,7 @@ export class UpdateEmployeeUseCase {
     employee.rg = rg
     employee.email = email
     employee.phoneNumber = phoneNumber
+    employee.isActive = isActive
 
     await this.employeeRepository.update(employee)
   }

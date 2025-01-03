@@ -1,12 +1,12 @@
-import { Entity } from 'src/core/entities/entity'
-import { UniqueEntityid } from 'src/core/entities/unique-entity-id'
+import { Entity } from '@/core/entities/entity'
+import { UniqueEntityid } from '@/core/entities/unique-entity-id'
 
 export interface deductionsProps {
   employeeId: UniqueEntityid
   reason: string
   date: Date
   amount: number
-  description?: string
+  description: string
   createdAt: Date
   updatedAt?: Date | null
 }

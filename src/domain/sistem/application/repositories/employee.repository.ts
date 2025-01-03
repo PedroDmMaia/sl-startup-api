@@ -3,6 +3,9 @@ import { Employee } from '../../enterprise/entities/employee'
 export abstract class EmployeeRepository {
   abstract create(employee: Employee): Promise<void>
   abstract update(employee: Employee): Promise<void>
-  abstract inactive(employee: Employee): Promise<void>
+  abstract delete(employee: Employee): Promise<void>
   abstract findById(id: string): Promise<Employee | null>
+  abstract findByCpf(cpf: string): Promise<Employee | null>
+  abstract findByRg(rg: string): Promise<Employee | null>
+  abstract findByEmail(rg: string): Promise<Employee | null>
 }

@@ -1,5 +1,5 @@
-import { Entity } from 'src/core/entities/entity'
-import { UniqueEntityid } from 'src/core/entities/unique-entity-id'
+import { Entity } from '@/core/entities/entity'
+import { UniqueEntityid } from '@/core/entities/unique-entity-id'
 
 export interface bankProps {
   empoyeeId: UniqueEntityid

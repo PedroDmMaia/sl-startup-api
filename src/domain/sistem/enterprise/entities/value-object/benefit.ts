@@ -9,10 +9,10 @@ export class Benefit {
   private props: BenefitProps
 
   private constructor(props: BenefitProps) {
+    this.props = props
     if (this.props.value <= 0) {
       throw new Error('O valor do beneficio não pode ser negativo')
     }
-    this.props = props
   }
 
   get name() {

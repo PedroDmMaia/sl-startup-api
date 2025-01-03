@@ -1,6 +1,6 @@
-import { UniqueEntityid } from 'src/core/entities/unique-entity-id'
+import { UniqueEntityid } from '@/core/entities/unique-entity-id'
 import { Benefit } from './value-object/benefit'
-import { Entity } from 'src/core/entities/entity'
+import { Entity } from '@/core/entities/entity'
 
 export interface roleProps {
   employees: UniqueEntityid[]
