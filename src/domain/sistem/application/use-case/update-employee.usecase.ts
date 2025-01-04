@@ -1,7 +1,10 @@
+import { UniqueEntityid } from '@/core/entities/unique-entity-id'
 import { EmployeeRepository } from '../repositories/employee.repository'
+import { Either, left, right } from '@/core/either'
+import { Employee } from '../../enterprise/entities/employee'
 
 interface UpdateEmployeeUseCaseResquest {
-  employeeId: string
+  employeeId: UniqueEntityid
   name: string
   cpf: string
   rg: string
@@ -9,6 +12,8 @@ interface UpdateEmployeeUseCaseResquest {
   phoneNumber: string
   isActive: boolean
 }
+
+type UpdateEmployeeUseCaseResponse = Either<null, { employee: Employee }>
 
 export class UpdateEmployeeUseCase {
   constructor(private employeeRepository: EmployeeRepository) {}
@@ -21,11 +26,13 @@ export class UpdateEmployeeUseCase {
     email,
     phoneNumber,
     isActive,
-  }: UpdateEmployeeUseCaseResquest) {
-    const employee = await this.employeeRepository.findById(employeeId)
+  }: UpdateEmployeeUseCaseResquest): Promise<UpdateEmployeeUseCaseResponse> {
+    const employee = await this.employeeRepository.findById(
+      employeeId.toString(),
+    )
 
     if (!employee) {
-      throw new Error('Employee not found')
+      return left(null)
     }
 
     employee.name = name
@@ -36,5 +43,7 @@ export class UpdateEmployeeUseCase {
     employee.isActive = isActive
 
     await this.employeeRepository.update(employee)
+
+    return right({ employee })
   }
 }
