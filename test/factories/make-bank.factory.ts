@@ -8,7 +8,7 @@ export function MakeBank(
 ) {
   const employee = Bank.create(
     {
-      empoyeeId: new UniqueEntityid(),
+      employeeId: new UniqueEntityid(),
       bankName: faker.company.name(),
       accountNumber: faker.finance.accountNumber(),
       agencyNumber: String(faker.number.int()),

@@ -5,7 +5,7 @@ import { BankRepository } from '../repositories/bank.repository'
 import { EmployeeRepository } from '../repositories/employee.repository'
 
 interface createBankUseCaseRequest {
-  empoyeeId: UniqueEntityid
+  employeeId: UniqueEntityid
   bankName: string
   agencyNumber: string
   accountNumber: string
@@ -20,19 +20,19 @@ export class CreateBankUseCase {
   ) {}
 
   async execute({
-    empoyeeId,
+    employeeId,
     bankName,
     agencyNumber,
     accountNumber,
   }: createBankUseCaseRequest): Promise<createBankUseCaseResponse> {
     const employeeExists = await this.employeeRepository.findById(
-      empoyeeId.toString(),
+      employeeId.toString(),
     )
 
     if (!employeeExists) return left(null)
 
     const bank = Bank.create({
-      empoyeeId,
+      employeeId,
       bankName,
       agencyNumber,
       accountNumber,

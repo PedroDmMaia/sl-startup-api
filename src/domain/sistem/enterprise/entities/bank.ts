@@ -2,15 +2,15 @@ import { Entity } from '@/core/entities/entity'
 import { UniqueEntityid } from '@/core/entities/unique-entity-id'
 
 export interface bankProps {
-  empoyeeId: UniqueEntityid
+  employeeId: UniqueEntityid
   bankName: string
   agencyNumber: string
   accountNumber: string
 }
 
 export class Bank extends Entity<bankProps> {
-  get empoyeeId() {
-    return this.props.empoyeeId
+  get employeeId() {
+    return this.props.employeeId
   }
 
   get bankName() {

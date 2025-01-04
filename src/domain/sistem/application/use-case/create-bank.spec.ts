@@ -9,8 +9,10 @@ let inMemoryEmployeeRepository: InMemoryEmployeeRepository
 let sut: CreateBankUseCase
 describe('create bank test', () => {
   beforeEach(() => {
-    inMemoryBankRepository = new InMemoryBankRepository()
     inMemoryEmployeeRepository = new InMemoryEmployeeRepository()
+    inMemoryBankRepository = new InMemoryBankRepository(
+      inMemoryEmployeeRepository,
+    )
 
     sut = new CreateBankUseCase(
       inMemoryBankRepository,
@@ -24,7 +26,7 @@ describe('create bank test', () => {
     await inMemoryEmployeeRepository.create(employee)
 
     const result = await sut.execute({
-      empoyeeId: employee.id,
+      employeeId: employee.id,
       bankName: 'Banco do Brasil',
       agencyNumber: '1234',
       accountNumber: '567890',

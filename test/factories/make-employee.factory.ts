@@ -11,7 +11,7 @@ export function MakeEmployee(
 ) {
   const employee = Employee.create(
     {
-      name: faker.name.fullName(),
+      name: faker.person.fullName(),
       email: faker.internet.email(),
       cpf: '1231231231231',
       rg: '1231231231',
