@@ -1,5 +1,6 @@
 import { Entity } from '@/core/entities/entity'
 import { UniqueEntityid } from '@/core/entities/unique-entity-id'
+import { Optional } from '@/core/types/optional'
 
 export interface userProps {
   employeeId: UniqueEntityid
@@ -36,14 +37,14 @@ export class User extends Entity<userProps> {
     if (!password || password.trim().length < 4) {
       throw new Error('Password must have at least 4 characters')
     }
-    this.password = password
+    this.props.password = password
   }
 
   set isActive(isActive: boolean) {
-    this.isActive = isActive
+    this.props.isActive = isActive
   }
 
-  static create(props: userProps, id?: UniqueEntityid) {
+  static create(props: Optional<userProps, 'isActive'>, id?: UniqueEntityid) {
     const user = new User(
       {
         ...props,

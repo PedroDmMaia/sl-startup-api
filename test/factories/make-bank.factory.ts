@@ -6,7 +6,7 @@ export function MakeBank(
   overrride: Partial<bankProps> = {},
   id?: UniqueEntityid,
 ) {
-  const employee = Bank.create(
+  const bank = Bank.create(
     {
       employeeId: new UniqueEntityid(),
       bankName: faker.company.name(),
@@ -17,5 +17,5 @@ export function MakeBank(
     id,
   )
 
-  return employee
+  return bank
 }
