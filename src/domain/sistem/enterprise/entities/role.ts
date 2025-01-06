@@ -1,5 +1,5 @@
 import { UniqueEntityid } from '@/core/entities/unique-entity-id'
-import { Benefit } from './value-object/benefit'
+import { Benefit } from './benefit'
 import { Entity } from '@/core/entities/entity'
 
 export interface roleProps {
