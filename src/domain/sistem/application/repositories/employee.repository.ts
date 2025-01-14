@@ -1,3 +1,4 @@
+import { PaginationParams } from '@/core/types/pagination-params'
 import { Employee } from '../../enterprise/entities/employee'
 
 export abstract class EmployeeRepository {
@@ -8,4 +9,5 @@ export abstract class EmployeeRepository {
   abstract findByCpf(cpf: string): Promise<Employee | null>
   abstract findByRg(rg: string): Promise<Employee | null>
   abstract findByEmail(rg: string): Promise<Employee | null>
+  abstract listAll(params: PaginationParams): Promise<Employee[]>
 }

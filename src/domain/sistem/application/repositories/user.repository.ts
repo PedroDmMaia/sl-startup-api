@@ -5,5 +5,6 @@ export abstract class UserRepository {
   abstract update(user: User): Promise<void>
   abstract delete(id: string): Promise<void>
   abstract findById(id: string): Promise<User | null>
+  abstract findByName(userName: string): Promise<User | null>
   abstract findByEmployeeId(id: string): Promise<User | null>
 }
