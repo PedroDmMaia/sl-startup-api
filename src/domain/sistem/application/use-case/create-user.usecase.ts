@@ -3,6 +3,7 @@ import { User } from '../../enterprise/entities/user'
 import { UserRepository } from '../repositories/user.repository'
 import { UniqueEntityid } from '@/core/entities/unique-entity-id'
 import { EmployeeRepository } from '../repositories/employee.repository'
+import { HashGenator } from '../cryptography/hash-gerator'
 
 interface createUserUseCaseRequest {
   employeeId: UniqueEntityid
@@ -16,6 +17,7 @@ export class CreateUserUseCase {
   constructor(
     private userRepository: UserRepository,
     private employeeRepository: EmployeeRepository,
+    private hashGerator: HashGenator,
   ) {}
 
   async execute({
@@ -31,10 +33,14 @@ export class CreateUserUseCase {
       return left(null)
     }
 
+    const passwordHashed = await this.hashGerator.hash(password)
+
+    const userNameFormat = userName.trim().toLowerCase()
+
     const user = User.create({
       employeeId,
-      userName,
-      password,
+      userName: userNameFormat,
+      password: passwordHashed,
     })
 
     await this.userRepository.create(user)
