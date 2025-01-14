@@ -1,5 +1,6 @@
 import { Entity } from '@/core/entities/entity'
 import { UniqueEntityid } from '@/core/entities/unique-entity-id'
+import { Optional } from '@/core/types/optional'
 
 export interface deductionsProps {
   employeeId: UniqueEntityid
@@ -54,7 +55,10 @@ export class Deductions extends Entity<deductionsProps> {
     this.touch()
   }
 
-  static create(props: deductionsProps, id?: UniqueEntityid) {
+  static create(
+    props: Optional<deductionsProps, 'createdAt' | 'updatedAt'>,
+    id?: UniqueEntityid,
+  ) {
     const deduction = new Deductions(
       {
         ...props,

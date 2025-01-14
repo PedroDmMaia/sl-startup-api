@@ -1,23 +1,28 @@
 import { UniqueEntityid } from '@/core/entities/unique-entity-id'
-import { Benefit } from './benefit'
 import { Entity } from '@/core/entities/entity'
+import { Optional } from '@/core/types/optional'
 
 export interface roleProps {
-  employees: UniqueEntityid[]
+  employeesIds: UniqueEntityid[]
   name: string
+  pay: number
   description: string
   hourlyRate: number
   weeklyHours: number
-  benefits: Benefit[]
+  benefitsIds: UniqueEntityid[]
 }
 
 export class Role extends Entity<roleProps> {
-  get employees() {
-    return this.props.employees
+  get employeesIds() {
+    return this.props.employeesIds
   }
 
   get name() {
     return this.props.name
+  }
+
+  get pay() {
+    return this.props.pay
   }
 
   get description() {
@@ -32,12 +37,20 @@ export class Role extends Entity<roleProps> {
     return this.props.weeklyHours
   }
 
-  get benefits() {
-    return this.props.benefits
+  get benefitsIds() {
+    return this.props.benefitsIds
+  }
+
+  set employeesIds(employeesIds: UniqueEntityid[]) {
+    this.props.employeesIds = employeesIds
   }
 
   set name(name: string) {
     this.props.name = name
+  }
+
+  set pay(pay: number) {
+    this.props.pay = pay
   }
 
   set description(description: string) {
@@ -52,11 +65,19 @@ export class Role extends Entity<roleProps> {
     this.props.weeklyHours = weeklyHours
   }
 
-  static create(props: roleProps, id?: UniqueEntityid) {
+  set benefitsIds(benefitsIds: UniqueEntityid[]) {
+    this.props.benefitsIds = benefitsIds
+  }
+
+  static create(
+    props: Optional<roleProps, 'employeesIds' | 'benefitsIds'>,
+    id?: UniqueEntityid,
+  ) {
     const role = new Role(
       {
         ...props,
-        benefits: props.benefits ?? [],
+        employeesIds: props.employeesIds ?? [],
+        benefitsIds: props.benefitsIds ?? [],
       },
       id,
     )
