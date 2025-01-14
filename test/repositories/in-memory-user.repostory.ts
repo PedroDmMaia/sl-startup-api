@@ -30,6 +30,14 @@ export class InMemoryUserRepository implements UserRepository {
     return user
   }
 
+  async findByName(userName: string): Promise<User | null> {
+    const user = this.items.find((item) => item.userName === userName)
+
+    if (!user) return null
+
+    return user
+  }
+
   async findByEmployeeId(id: string): Promise<User | null> {
     const employee = await this.employeeRepository.findById(id)
 

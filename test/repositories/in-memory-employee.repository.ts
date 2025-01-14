@@ -1,3 +1,4 @@
+import { PaginationParams } from '@/core/types/pagination-params'
 import { EmployeeRepository } from '@/domain/sistem/application/repositories/employee.repository'
 import { Employee } from '@/domain/sistem/enterprise/entities/employee'
 
@@ -47,6 +48,12 @@ export class InMemoryEmployeeRepository implements EmployeeRepository {
     const employee = this.items.find((item) => item.email === email)
 
     if (!employee) return null
+
+    return employee
+  }
+
+  async listAll(params: PaginationParams): Promise<Employee[]> {
+    const employee = this.items.slice((params.page - 1) * 20, params.page * 20)
 
     return employee
   }
