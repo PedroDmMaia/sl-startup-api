@@ -7,11 +7,98 @@ datasource db {
   url      = env("DATABASE_URL")
 }
 
+model Employee {
+  id          String    @id @default(uuid())
+  name        String
+  cpf         String
+  rg          String
+  email       String
+  phoneNumber String
+  isActive    Boolean   @default(true) @map("is_active")
+  createdAt   DateTime  @default(now()) @map("crated_at")
+  updatedAt   DateTime? @updatedAt @map("updated_at")
+
+  roles       Role[]
+  deductions  Deduction[]
+  bankDetails Bank[]
+  user        User?
+
+  @@map("employee")
+}
+
+model Benefit {
+  id          String    @id @default(uuid())
+  name        String
+  value       Float
+  description String?
+  conditions  String?
+  createdAt   DateTime  @default(now()) @map("crated_at")
+  updatedAt   DateTime? @updatedAt @map("updated_at")
+
+  // Relacionamento muitos-para-muitos com Role
+  roles Role[] @relation("BenefitRoles")
+
+  @@map("benefit")
+}
+
+model Deduction {
+  id          String    @id @default(uuid())
+  employeeId  String    @map("employee_id")
+  reason      String
+  date        DateTime  @default(now())
+  amount      Float
+  description String
+  createdAt   DateTime  @default(now()) @map("crated_at")
+  updatedAt   DateTime? @updatedAt @map("updated_at")
+
+  employee Employee @relation(fields: [employeeId], references: [id])
+
+  @@map("deduction")
+}
+
+model Bank {
+  id            String    @id @default(uuid())
+  employeeId    String    @map("employee_id")
+  bankName      String
+  agencyNumber  String
+  accountNumber String
+  createdAt     DateTime  @default(now()) @map("crated_at")
+  updatedAt     DateTime? @updatedAt @map("updated_at")
+
+  employee Employee @relation(fields: [employeeId], references: [id])
+
+  @@map("bank")
+}
+
+model Role {
+  id          String    @id @default(uuid())
+  employeeId  String    @map("employee_id")
+  name        String
+  pay         Float
+  description String
+  hourlyRate  Int
+  weeklyHours Int
+  createdAt   DateTime  @default(now()) @map("crated_at")
+  updatedAt   DateTime? @updatedAt @map("updated_at")
+
+  // Relacionamento muitos-para-muitos com Benefit
+  benefits Benefit[] @relation("BenefitRoles")
+
+  employee Employee @relation(fields: [employeeId], references: [id])
+
+  @@map("role")
+}
+
 model User {
-  id       String @id @default(uuid())
-  name     String
-  email    String @unique
-  password String
+  id         String    @id @default(uuid())
+  employeeId String    @unique @map("employee_id")
+  userName   String    @unique @map("user_name")
+  password   String
+  isActive   Boolean   @default(true) @map("is_active")
+  createdAt  DateTime  @default(now()) @map("crated_at")
+  updatedAt  DateTime? @updatedAt @map("updated_at")
+
+  employee Employee @relation(fields: [employeeId], references: [id])
 
   @@map("users")
 }
