@@ -8,6 +8,8 @@ export interface benefitProps {
   value: number
   description?: string
   conditions?: string[]
+  createdAt: Date
+  updatedAt?: Date | null
 }
 
 export class Benefit extends Entity<benefitProps> {
@@ -31,27 +33,49 @@ export class Benefit extends Entity<benefitProps> {
     return this.props.conditions ?? []
   }
 
+  get createdAt() {
+    return this.props.createdAt
+  }
+
+  get updatedAt() {
+    return this.props.updatedAt
+  }
+
+  private touch() {
+    this.props.updatedAt = new Date()
+  }
+
   set name(name: string) {
     this.props.name = name
+    this.touch()
   }
 
   set value(value: number) {
     this.props.value = value
+    this.touch()
   }
 
   set description(description: string) {
     this.props.description = description
+    this.touch()
   }
 
   set conditions(conditions: string[]) {
     this.props.conditions = conditions
+    this.touch()
   }
 
   static create(
-    props: Optional<benefitProps, 'description' | 'conditions'>,
+    props: Optional<benefitProps, 'description' | 'conditions' | 'createdAt'>,
     id?: UniqueEntityid,
   ) {
-    const benefit = new Benefit({ ...props }, id)
+    const benefit = new Benefit(
+      {
+        ...props,
+        createdAt: props.createdAt ?? new Date(),
+      },
+      id,
+    )
 
     return benefit
   }

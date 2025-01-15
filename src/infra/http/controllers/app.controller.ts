@@ -1,11 +1,16 @@
-import { Controller } from '@nestjs/common'
-import { AppService } from '@/infra/app.service'
-import { PrismaService } from '@/infra/database/prisma/prisma.service'
+import { Public } from '@/infra/auth/public'
+import { Controller, Post } from '@nestjs/common'
+import { JwtService } from '@nestjs/jwt'
 
-@Controller()
+@Controller('/session')
+@Public()
 export class AppController {
-  constructor(
-    private appService: AppService,
-    private prismaService: PrismaService,
-  ) {}
+  constructor(private jwt: JwtService) {}
+
+  @Post()
+  async handle() {
+    const token = this.jwt.sign({ sub: 'user-id' })
+
+    return { token }
+  }
 }

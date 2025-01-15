@@ -38,6 +38,14 @@ export class Employee extends Entity<employeeProps> {
     return this.props.isActive
   }
 
+  get createdAt() {
+    return this.props.createdAt
+  }
+
+  get updatedAt() {
+    return this.props.updatedAt
+  }
+
   private touch() {
     this.props.updatedAt = new Date()
   }

@@ -56,7 +56,7 @@ export class Deductions extends Entity<deductionsProps> {
   }
 
   static create(
-    props: Optional<deductionsProps, 'createdAt' | 'updatedAt'>,
+    props: Optional<deductionsProps, 'createdAt'>,
     id?: UniqueEntityid,
   ) {
     const deduction = new Deductions(

@@ -10,6 +10,8 @@ export interface roleProps {
   hourlyRate: number
   weeklyHours: number
   benefitsIds: UniqueEntityid[]
+  createdAt: Date
+  updatedAt?: Date | null
 }
 
 export class Role extends Entity<roleProps> {
@@ -41,32 +43,51 @@ export class Role extends Entity<roleProps> {
     return this.props.benefitsIds
   }
 
+  get createdAt() {
+    return this.props.createdAt
+  }
+
+  get updatedAt() {
+    return this.props.updatedAt
+  }
+
+  private touch() {
+    this.props.updatedAt = new Date()
+  }
+
   set employeesIds(employeesIds: UniqueEntityid[]) {
     this.props.employeesIds = employeesIds
+    this.touch()
   }
 
   set name(name: string) {
     this.props.name = name
+    this.touch()
   }
 
   set pay(pay: number) {
     this.props.pay = pay
+    this.touch()
   }
 
   set description(description: string) {
     this.props.description = description
+    this.touch()
   }
 
   set hourlyRate(hourlyRate: number) {
     this.props.hourlyRate = hourlyRate
+    this.touch()
   }
 
   set weeklyHours(weeklyHours: number) {
     this.props.weeklyHours = weeklyHours
+    this.touch()
   }
 
   set benefitsIds(benefitsIds: UniqueEntityid[]) {
     this.props.benefitsIds = benefitsIds
+    this.touch()
   }
 
   static create(
