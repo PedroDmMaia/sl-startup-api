@@ -1,47 +1,62 @@
 import { Either, left, right } from '@/core/either'
 import { HashCompare } from '../cryptography/hash-compare'
-import { UserRepository } from '../repositories/user.repository'
 import { Encrypter } from '../cryptography/encrypter'
 import { WrongCreadentialsError } from './errors/wrong-credentials.error'
+import { Injectable } from '@nestjs/common'
+import { EmployeeRepository } from '../repositories/employee.repository'
+import { RoleRepository } from '../repositories/role.repository'
 
-interface AuthenticateUserUseCaseRequest {
-  userName: string
+interface AuthenticateEmployeeUseCaseRequest {
+  email: string
   password: string
 }
 
-type AuthenticateUserUseCaseResponse = Either<
+type AuthenticateEmployeeUseCaseResponse = Either<
   WrongCreadentialsError,
   { accessToken: string }
 >
-
+@Injectable()
 export class AuthenticateUserUseCase {
   constructor(
-    private userRepository: UserRepository,
+    private employeeRepository: EmployeeRepository,
+    private roleRepository: RoleRepository,
     private hashCompare: HashCompare,
     private encrypter: Encrypter,
   ) {}
 
   async execute({
-    userName,
+    email,
     password,
-  }: AuthenticateUserUseCaseRequest): Promise<AuthenticateUserUseCaseResponse> {
-    const user = await this.userRepository.findByName(userName)
+  }: AuthenticateEmployeeUseCaseRequest): Promise<AuthenticateEmployeeUseCaseResponse> {
+    const employee = await this.employeeRepository.findByEmail(email)
 
-    if (!user) {
+    if (!employee) {
       return left(new WrongCreadentialsError())
     }
 
     const isPasswordValid = await this.hashCompare.compare(
       password,
-      user.password,
+      employee.password,
     )
 
     if (!isPasswordValid) {
       return left(new WrongCreadentialsError())
     }
 
+    const employeeRole = await this.roleRepository.findByEmployeeId(
+      employee.id.toString(),
+    )
+
+    if (!employeeRole) {
+      return left(new WrongCreadentialsError())
+    }
+
+    if (employeeRole.name !== 'rh') {
+      return left(new WrongCreadentialsError())
+    }
+
     const accessToken = await this.encrypter.encrypt({
-      sub: user.id.toString(),
+      sub: employee.id.toString(),
     })
 
     return right({ accessToken })

@@ -7,6 +7,7 @@ export interface employeeProps {
   cpf: string
   rg: string
   email: string
+  password: string
   phoneNumber: string
   isActive: boolean
   createdAt: Date
@@ -28,6 +29,10 @@ export class Employee extends Entity<employeeProps> {
 
   get email() {
     return this.props.email
+  }
+
+  get password() {
+    return this.props.password
   }
 
   get phoneNumber() {
@@ -67,6 +72,11 @@ export class Employee extends Entity<employeeProps> {
 
   set email(email: string) {
     this.props.email = email
+    this.touch()
+  }
+
+  set password(password: string) {
+    this.props.password = password
     this.touch()
   }
 

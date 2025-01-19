@@ -1,5 +1,6 @@
 import { Either, right } from '@/core/either'
 import { EmployeeRepository } from '../repositories/employee.repository'
+import { Injectable } from '@nestjs/common'
 
 interface deleteEmployeeUseCaseResquest {
   id: string
@@ -7,10 +8,11 @@ interface deleteEmployeeUseCaseResquest {
 
 type deleteEmployeeUseCaseResponse = Either<null, null>
 
+@Injectable()
 export class DeleteEmployeeUseCase {
   constructor(private employeeRepository: EmployeeRepository) {}
 
-  async exeute({
+  async execute({
     id,
   }: deleteEmployeeUseCaseResquest): Promise<deleteEmployeeUseCaseResponse> {
     const employee = await this.employeeRepository.findById(id)

@@ -3,20 +3,22 @@ import { RoleRepository } from '../repositories/role.repository'
 import { Either, left, right } from '@/core/either'
 import { Role } from '../../enterprise/entities/role'
 import { EmployeeRepository } from '../repositories/employee.repository'
+import { Injectable } from '@nestjs/common'
 
 interface UpdateRoleUseCaseResquest {
-  roleId: UniqueEntityid
-  employeesIds?: UniqueEntityid[]
+  roleId: string
+  employeeId: string
   name: string
   pay: number
   description: string
   hourlyRate: number
   weeklyHours: number
-  benefitsIds?: UniqueEntityid[]
+  benefitsIds?: string[]
 }
 
 type UpdateRoleUseCaseResponse = Either<null, { role: Role }>
 
+@Injectable()
 export class UpdateRoleUseCase {
   constructor(
     private roleRepository: RoleRepository,
@@ -25,7 +27,7 @@ export class UpdateRoleUseCase {
 
   async execute({
     roleId,
-    employeesIds,
+    employeeId,
     name,
     pay,
     description,
@@ -33,34 +35,22 @@ export class UpdateRoleUseCase {
     weeklyHours,
     benefitsIds,
   }: UpdateRoleUseCaseResquest): Promise<UpdateRoleUseCaseResponse> {
-    const validEmployees = employeesIds
-      ? await Promise.all(
-          employeesIds.map(async (item) => {
-            const employee = await this.employeeRepository.findById(
-              item.toString(),
-            )
-            return employee || null
-          }),
-        )
-      : []
+    const validEmployee = await this.employeeRepository.findById(employeeId)
 
-    const invalidEmployees = validEmployees.filter((item) => item === null)
-
-    if (invalidEmployees.length > 0) {
-      return left(null)
-    }
+    if (!validEmployee) return left(null)
 
     const role = await this.roleRepository.findById(roleId.toString())
 
     if (!role) return left(null)
 
-    role.employeesIds = employeesIds ?? []
+    role.employeeId = employeeId
     role.name = name
     role.pay = pay
     role.description = description
     role.hourlyRate = hourlyRate
     role.weeklyHours = weeklyHours
-    role.benefitsIds = benefitsIds ?? []
+    role.benefitsIds =
+      benefitsIds?.map((item) => new UniqueEntityid(item)) ?? []
 
     await this.roleRepository.update(role)
 

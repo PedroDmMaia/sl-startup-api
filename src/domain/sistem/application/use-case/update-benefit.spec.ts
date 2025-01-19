@@ -27,17 +27,17 @@ describe('update benefit test', () => {
       roleId: [role.id],
       value: 5000,
       description: 'Senior level',
-      conditions: ['Senior experience'],
+      conditions: 'Senior experience',
     })
 
     await inMemoryBenefitRepository.create(benfit)
 
     const result = await sut.execute({
-      benefitId: benfit.id,
+      benefitId: benfit.id.toString(),
       name: 'Manager',
       value: 5500,
       description: 'Senior level',
-      conditions: ['Senior experience'],
+      conditions: 'Senior experience',
     })
 
     if (result.isRight()) {

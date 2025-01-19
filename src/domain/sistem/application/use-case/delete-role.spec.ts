@@ -17,7 +17,7 @@ describe('delete role test', () => {
     await inMemoryRoleRepository.create(role)
 
     const result = await sut.execute({
-      roleId: role.id,
+      roleId: role.id.toString(),
     })
 
     expect(result.isRight()).toBe(true)

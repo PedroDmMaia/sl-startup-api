@@ -1,20 +1,22 @@
 import { Either, left, right } from '@/core/either'
 import { RoleRepository } from '../repositories/role.repository'
-import { UniqueEntityid } from '@/core/entities/unique-entity-id'
+import { Injectable } from '@nestjs/common'
 
 interface deleteRoleUseCaseResquest {
-  roleId: UniqueEntityid
+  roleId: string
 }
 
 type deleteRoleUseCaseResponse = Either<null, null>
 
+@Injectable()
 export class DeleteRoleUseCase {
   constructor(private roleRepository: RoleRepository) {}
 
   async execute({
     roleId,
   }: deleteRoleUseCaseResquest): Promise<deleteRoleUseCaseResponse> {
-    const role = await this.roleRepository.findById(roleId.toString())
+    const role = await this.roleRepository.findById(roleId)
+
     if (!role) {
       return left(null)
     }

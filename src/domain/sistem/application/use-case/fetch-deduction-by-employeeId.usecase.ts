@@ -1,6 +1,7 @@
 import { Either, left, right } from '@/core/either'
 import { DeductionRepository } from '../repositories/deductions.repository'
 import { Deductions } from '../../enterprise/entities/deduction'
+import { Injectable } from '@nestjs/common'
 
 interface FetchDeductionUseCaseResquest {
   employeeId: string
@@ -9,6 +10,7 @@ interface FetchDeductionUseCaseResquest {
 
 type FetchDeductionUseCaseResponse = Either<null, { deductions: Deductions[] }>
 
+@Injectable()
 export class FetchDeductionUseCase {
   constructor(private deductionRepository: DeductionRepository) {}
 

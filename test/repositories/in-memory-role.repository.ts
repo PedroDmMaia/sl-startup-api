@@ -28,6 +28,14 @@ export class InMemoryRoleRepository implements RoleRepository {
     return role
   }
 
+  async findByEmployeeId(employeeId: string): Promise<Role | null> {
+    const role = this.items.find((item) => item.employeeId === employeeId)
+
+    if (!role) return null
+
+    return role
+  }
+
   async listAll(params: PaginationParams): Promise<Role[]> {
     const role = this.items.slice((params.page - 1) * 20, params.page * 20)
 

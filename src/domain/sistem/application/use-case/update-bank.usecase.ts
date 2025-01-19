@@ -1,10 +1,10 @@
-import { UniqueEntityid } from '@/core/entities/unique-entity-id'
 import { Either, left, right } from '@/core/either'
 import { Bank } from '../../enterprise/entities/bank'
 import { BankRepository } from '../repositories/bank.repository'
+import { Injectable } from '@nestjs/common'
 
 interface UpdateBankUseCaseResquest {
-  employeeId: UniqueEntityid
+  employeeId: string
   bankName: string
   agencyNumber: string
   accountNumber: string
@@ -12,6 +12,7 @@ interface UpdateBankUseCaseResquest {
 
 type UpdateBankUseCaseResponse = Either<null, { bank: Bank }>
 
+@Injectable()
 export class UpdateBankUseCase {
   constructor(private bankRepository: BankRepository) {}
 

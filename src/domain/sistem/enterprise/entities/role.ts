@@ -3,7 +3,7 @@ import { Entity } from '@/core/entities/entity'
 import { Optional } from '@/core/types/optional'
 
 export interface roleProps {
-  employeesIds: UniqueEntityid[]
+  employeeId: string
   name: string
   pay: number
   description: string
@@ -15,8 +15,8 @@ export interface roleProps {
 }
 
 export class Role extends Entity<roleProps> {
-  get employeesIds() {
-    return this.props.employeesIds
+  get employeeId() {
+    return this.props.employeeId
   }
 
   get name() {
@@ -55,8 +55,8 @@ export class Role extends Entity<roleProps> {
     this.props.updatedAt = new Date()
   }
 
-  set employeesIds(employeesIds: UniqueEntityid[]) {
-    this.props.employeesIds = employeesIds
+  set employeeId(employeeId: string) {
+    this.props.employeeId = employeeId
     this.touch()
   }
 
@@ -91,14 +91,14 @@ export class Role extends Entity<roleProps> {
   }
 
   static create(
-    props: Optional<roleProps, 'employeesIds' | 'benefitsIds'>,
+    props: Optional<roleProps, 'benefitsIds' | 'createdAt'>,
     id?: UniqueEntityid,
   ) {
     const role = new Role(
       {
         ...props,
-        employeesIds: props.employeesIds ?? [],
         benefitsIds: props.benefitsIds ?? [],
+        createdAt: props.createdAt ?? new Date(),
       },
       id,
     )

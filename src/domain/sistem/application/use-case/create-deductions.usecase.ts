@@ -1,11 +1,12 @@
 import { Either, right, left } from '@/core/either'
 import { Deductions } from '../../enterprise/entities/deduction'
 import { DeductionRepository } from '../repositories/deductions.repository'
-import { UniqueEntityid } from '@/core/entities/unique-entity-id'
 import { EmployeeRepository } from '../repositories/employee.repository'
+import { Injectable } from '@nestjs/common'
+import { UniqueEntityid } from '@/core/entities/unique-entity-id'
 
 interface createDeductionUseCaseRequest {
-  employeeId: UniqueEntityid
+  employeeId: string
   reason: string
   date: Date
   amount: number
@@ -14,6 +15,7 @@ interface createDeductionUseCaseRequest {
 
 type createDeductionUseCaseResponse = Either<null, { deduction: Deductions }>
 
+@Injectable()
 export class CreateDeductionUseCase {
   constructor(
     private deductionRepository: DeductionRepository,
@@ -34,7 +36,7 @@ export class CreateDeductionUseCase {
     if (!employeeExistis) return left(null)
 
     const deduction = Deductions.create({
-      employeeId,
+      employeeId: new UniqueEntityid(employeeId),
       reason,
       date,
       amount,

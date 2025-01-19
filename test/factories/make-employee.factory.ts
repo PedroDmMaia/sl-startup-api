@@ -13,6 +13,7 @@ export function MakeEmployee(
     {
       name: faker.person.fullName(),
       email: faker.internet.email(),
+      password: faker.internet.password(),
       cpf: '1231231231231',
       rg: '1231231231',
       phoneNumber: faker.phone.imei(),

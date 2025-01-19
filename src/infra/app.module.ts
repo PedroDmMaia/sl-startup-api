@@ -7,12 +7,12 @@ import { EnvModule } from './env/env.module'
 
 @Module({
   imports: [
-    HttpModule,
     ConfigModule.forRoot({
       validate: (env) => envSchema.parse(env),
       isGlobal: true,
     }),
     AuthModule,
+    HttpModule,
     EnvModule,
   ],
 })

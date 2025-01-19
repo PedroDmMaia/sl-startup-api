@@ -25,7 +25,7 @@ describe('create deduction test', () => {
     await inMemoryEmployeeRepository.create(employee)
 
     const result = await sut.execute({
-      employeeId: employee.id,
+      employeeId: employee.id.toString(),
       reason: 'Sickness',
       date: new Date(),
       amount: 50,
@@ -41,7 +41,7 @@ describe('create deduction test', () => {
     await inMemoryEmployeeRepository.create(employee)
 
     const result = await sut.execute({
-      employeeId: new UniqueEntityid('employee-2'),
+      employeeId: 'employee-2',
       reason: 'Sickness',
       date: new Date(),
       amount: 50,

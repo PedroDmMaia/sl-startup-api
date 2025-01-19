@@ -4,13 +4,14 @@ import { BenefitRepository } from '../repositories/benefit.repository'
 import { UniqueEntityid } from '@/core/entities/unique-entity-id'
 import { RoleRepository } from '../repositories/role.repository'
 import { InvalidRolesError } from '@/core/errors/error/invalid-role.error'
+import { Injectable } from '@nestjs/common'
 
 interface createBenefitUseCaseRequest {
-  roleId: UniqueEntityid[]
+  roleId: string[]
   name: string
   value: number
   description?: string
-  conditions?: string[]
+  conditions?: string
 }
 
 type createBenefitUseCaseResponse = Either<
@@ -18,6 +19,7 @@ type createBenefitUseCaseResponse = Either<
   { benefit: Benefit }
 >
 
+@Injectable()
 export class CreateBenefitUseCase {
   constructor(
     private benefitRepository: BenefitRepository,
@@ -46,7 +48,7 @@ export class CreateBenefitUseCase {
     }
 
     const benefit = Benefit.create({
-      roleId,
+      roleId: roleId.map((item) => new UniqueEntityid(item)),
       name,
       value,
       description,

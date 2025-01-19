@@ -26,7 +26,7 @@ describe('create benefit test', () => {
     await inMemoryRoleRepository.create(role)
 
     const result = await sut.execute({
-      roleId: [role.id],
+      roleId: [role.id.toString()],
       name: 'Vale transporte',
       value: 100,
       description: 'Transportation allowance for the employee',

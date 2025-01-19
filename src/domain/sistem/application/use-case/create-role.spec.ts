@@ -32,17 +32,17 @@ describe('crete role test', async () => {
     await inMemoryBenefitRepository.create(benefit)
 
     const result = await sut.execute({
-      employeesIds: [employee.id],
+      employeeId: employee.id.toString(),
       name: 'Manager',
       pay: 1000,
       description: 'Gerente',
       hourlyRate: 20,
       weeklyHours: 40,
-      benefitsIds: [benefit.id],
+      benefitsIds: [benefit.id.toString()],
     })
 
     expect(result.isRight()).toBe(true)
-    expect(result.value?.role.employeesIds[0].toString()).toEqual('employee-1')
+    expect(result.value?.role.employeeId.toString()).toEqual('employee-1')
     expect(result.value?.role.benefitsIds[0].toString()).toEqual('benefit-1')
   })
 })

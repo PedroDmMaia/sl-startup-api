@@ -1,21 +1,22 @@
 import { Either, left, right } from '@/core/either'
 import { BenefitRepository } from '../repositories/benefit.repository'
 import { BenefitNotFoundError } from '@/core/errors/error/resource-not-found.error'
-import { UniqueEntityid } from '@/core/entities/unique-entity-id'
+import { Injectable } from '@nestjs/common'
 
 interface deleteBenefitUseCaseResquest {
-  benefitId: UniqueEntityid
+  benefitId: string
 }
 
 type deleteBenefitUseCaseResponse = Either<BenefitNotFoundError, null>
 
+@Injectable()
 export class DeleteBenefitUseCase {
   constructor(private benefitRepository: BenefitRepository) {}
 
   async execute({
     benefitId,
   }: deleteBenefitUseCaseResquest): Promise<deleteBenefitUseCaseResponse> {
-    const benefit = await this.benefitRepository.findById(benefitId.toString())
+    const benefit = await this.benefitRepository.findById(benefitId)
     if (!benefit) {
       return left(new BenefitNotFoundError())
     }

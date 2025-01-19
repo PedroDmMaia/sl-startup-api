@@ -1,6 +1,7 @@
 import { Either, right } from '@/core/either'
 import { BenefitRepository } from '../repositories/benefit.repository'
 import { Benefit } from '../../enterprise/entities/benefit'
+import { Injectable } from '@nestjs/common'
 
 interface FetchBenefitUseCaseResquest {
   page: number
@@ -8,6 +9,7 @@ interface FetchBenefitUseCaseResquest {
 
 type FetchBenefitUseCaseResponse = Either<null, { benefit: Benefit[] }>
 
+@Injectable()
 export class FetchBenefitUseCase {
   constructor(private benefitRepository: BenefitRepository) {}
 

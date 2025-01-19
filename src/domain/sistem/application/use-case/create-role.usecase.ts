@@ -1,21 +1,23 @@
 import { Either, left, right } from '@/core/either'
 import { Role } from '../../enterprise/entities/role'
 import { RoleRepository } from '../repositories/role.repository'
-import { UniqueEntityid } from '@/core/entities/unique-entity-id'
 import { EmployeeRepository } from '../repositories/employee.repository'
+import { Injectable } from '@nestjs/common'
+import { UniqueEntityid } from '@/core/entities/unique-entity-id'
 
 interface CreateRoleUseCaseRequest {
-  employeesIds?: UniqueEntityid[]
+  employeeId: string
   name: string
   pay: number
   description: string
   hourlyRate: number
   weeklyHours: number
-  benefitsIds?: UniqueEntityid[]
+  benefitsIds?: string[]
 }
 
 type createRoleUseCaseResponse = Either<null, { role: Role }>
 
+@Injectable()
 export class CreateRoleUseCase {
   constructor(
     private roleRespository: RoleRepository,
@@ -23,7 +25,7 @@ export class CreateRoleUseCase {
   ) {}
 
   async execute({
-    employeesIds,
+    employeeId,
     name,
     pay,
     description,
@@ -31,31 +33,29 @@ export class CreateRoleUseCase {
     weeklyHours,
     benefitsIds,
   }: CreateRoleUseCaseRequest): Promise<createRoleUseCaseResponse> {
-    const validEmployees = employeesIds
-      ? await Promise.all(
-          employeesIds.map(async (item) => {
-            const employee = await this.employeeRepository.findById(
-              item.toString(),
-            )
-            return employee || null
-          }),
-        )
-      : []
+    const validEmployee = await this.employeeRepository.findById(employeeId)
 
-    const invalidEmployees = validEmployees.filter((item) => item === null)
+    const employeeHaveRole =
+      await this.roleRespository.findByEmployeeId(employeeId)
 
-    if (invalidEmployees.length > 0) {
-      return left(null)
-    }
+    if (employeeHaveRole) return left(null)
+
+    if (!validEmployee) return left(null)
+
+    const roleName = name.toLowerCase()
+
+    const benefitsIdsToUniqueEntityId = benefitsIds?.map(
+      (item) => new UniqueEntityid(item),
+    )
 
     const role = Role.create({
-      employeesIds,
-      name,
+      employeeId,
+      name: roleName,
       pay,
       description,
       hourlyRate,
       weeklyHours,
-      benefitsIds,
+      benefitsIds: benefitsIdsToUniqueEntityId,
     })
 
     await this.roleRespository.create(role)

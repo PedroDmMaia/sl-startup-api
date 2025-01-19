@@ -29,7 +29,7 @@ describe('update benefit test', () => {
 
     await inMemoryBenefitRepository.create(benefit)
 
-    const result = await sut.execute({ benefitId: benefit.id })
+    const result = await sut.execute({ benefitId: benefit.id.toString() })
 
     expect(result.isRight()).toBe(true)
     expect(inMemoryBenefitRepository.items).toHaveLength(0)

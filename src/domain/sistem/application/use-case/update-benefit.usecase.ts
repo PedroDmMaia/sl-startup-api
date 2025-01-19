@@ -1,18 +1,19 @@
-import { UniqueEntityid } from '@/core/entities/unique-entity-id'
 import { Either, left, right } from '@/core/either'
 import { Benefit } from '../../enterprise/entities/benefit'
 import { BenefitRepository } from '../repositories/benefit.repository'
+import { Injectable } from '@nestjs/common'
 
 interface UpdateBenefitUseCaseResquest {
-  benefitId: UniqueEntityid
+  benefitId: string
   name: string
   value: number
   description?: string
-  conditions?: string[]
+  conditions?: string
 }
 
 type UpdateBenefitUseCaseResponse = Either<null, { benefit: Benefit }>
 
+@Injectable()
 export class UpdateBenefitUseCase {
   constructor(private benefitRepository: BenefitRepository) {}
 

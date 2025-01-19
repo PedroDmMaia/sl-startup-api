@@ -2,48 +2,53 @@ import { InMemoryEmployeeRepository } from 'test/repositories/in-memory-employee
 
 import { MakeEmployee } from 'test/factories/make-employee.factory'
 import { AuthenticateUserUseCase } from './authenticate-user.usecase'
-import { InMemoryUserRepository } from 'test/repositories/in-memory-user.repostory'
 import { FakeHasher } from 'test/cryptography/fake-hasher'
 import { FakeEncrypter } from 'test/cryptography/faker-encrypter'
-import { MakeUser } from 'test/factories/make-user.factory'
+import { InMemoryRoleRepository } from 'test/repositories/in-memory-role.repository'
+import { UniqueEntityid } from '@/core/entities/unique-entity-id'
+import { MakeRole } from 'test/factories/make-role.fatory'
 
 let inMemoryEmployeeRepository: InMemoryEmployeeRepository
-let inMemoryUserRepository: InMemoryUserRepository
+let inMemoryRoleRepository: InMemoryRoleRepository
 let fakeHasher: FakeHasher
 let fakeEncrypter: FakeEncrypter
 
 let sut: AuthenticateUserUseCase
-describe('create bank test', () => {
+describe('create authenticate test', () => {
   beforeEach(() => {
     inMemoryEmployeeRepository = new InMemoryEmployeeRepository()
-    inMemoryUserRepository = new InMemoryUserRepository(
-      inMemoryEmployeeRepository,
-    )
+    inMemoryRoleRepository = new InMemoryRoleRepository()
     fakeHasher = new FakeHasher()
     fakeEncrypter = new FakeEncrypter()
 
     sut = new AuthenticateUserUseCase(
-      inMemoryUserRepository,
+      inMemoryEmployeeRepository,
+      inMemoryRoleRepository,
       fakeHasher,
       fakeEncrypter,
     )
   })
 
-  it('should be able to create a bank details', async () => {
-    const employee = MakeEmployee()
-
-    await inMemoryEmployeeRepository.create(MakeEmployee())
-
-    await inMemoryUserRepository.create(
-      MakeUser({
-        employeeId: employee.id,
-        userName: 'jhon doe',
+  it('should be able to authneticate user', async () => {
+    const employee = MakeEmployee(
+      {
+        email: 'jhon@example.com',
         password: await fakeHasher.hash('123'),
+      },
+      new UniqueEntityid('employee-1'),
+    )
+
+    await inMemoryEmployeeRepository.create(employee)
+
+    await inMemoryRoleRepository.create(
+      MakeRole({
+        employeeId: employee.id.toString(),
+        name: 'rh',
       }),
     )
 
     const result = await sut.execute({
-      userName: 'jhon doe',
+      email: 'jhon@example.com',
       password: '123',
     })
 

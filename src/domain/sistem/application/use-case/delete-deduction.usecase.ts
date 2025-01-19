@@ -1,13 +1,14 @@
 import { Either, left, right } from '@/core/either'
-import { UniqueEntityid } from '@/core/entities/unique-entity-id'
 import { DeductionRepository } from '../repositories/deductions.repository'
+import { Injectable } from '@nestjs/common'
 
 interface DeleteDeductionUseCaseRequest {
-  deductionId: UniqueEntityid
+  deductionId: string
 }
 
 type DeleteDeductionUseCaseResponse = Either<null, null>
 
+@Injectable()
 export class DeleteDeductionUseCase {
   constructor(private deductionRepository: DeductionRepository) {}
 

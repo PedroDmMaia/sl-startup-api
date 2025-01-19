@@ -1,11 +1,12 @@
 import { Either, left, right } from '@/core/either'
 import { Bank } from '../../enterprise/entities/bank'
-import { UniqueEntityid } from '@/core/entities/unique-entity-id'
 import { BankRepository } from '../repositories/bank.repository'
 import { EmployeeRepository } from '../repositories/employee.repository'
+import { Injectable } from '@nestjs/common'
+import { UniqueEntityid } from '@/core/entities/unique-entity-id'
 
 interface createBankUseCaseRequest {
-  employeeId: UniqueEntityid
+  employeeId: string
   bankName: string
   agencyNumber: string
   accountNumber: string
@@ -13,6 +14,7 @@ interface createBankUseCaseRequest {
 
 type createBankUseCaseResponse = Either<null, { bank: Bank }>
 
+@Injectable()
 export class CreateBankUseCase {
   constructor(
     private bankRepository: BankRepository,
@@ -32,7 +34,7 @@ export class CreateBankUseCase {
     if (!employeeExists) return left(null)
 
     const bank = Bank.create({
-      employeeId,
+      employeeId: new UniqueEntityid(employeeId),
       bankName,
       agencyNumber,
       accountNumber,

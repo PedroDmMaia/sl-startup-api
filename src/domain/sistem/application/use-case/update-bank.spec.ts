@@ -28,7 +28,7 @@ describe('update bank details test', () => {
     await inMemoryBankRepository.create(bank)
 
     const result = await sut.execute({
-      employeeId: bank.employeeId,
+      employeeId: bank.employeeId.toString(),
       bankName: 'New Bank',
       accountNumber: '1234567890',
       agencyNumber: '1234',

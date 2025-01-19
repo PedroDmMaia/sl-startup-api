@@ -1,6 +1,7 @@
 import { Either, right } from '@/core/either'
 import { RoleRepository } from '../repositories/role.repository'
 import { Role } from '../../enterprise/entities/role'
+import { Injectable } from '@nestjs/common'
 
 interface FetchRoleUseCaseResquest {
   page: number
@@ -8,6 +9,7 @@ interface FetchRoleUseCaseResquest {
 
 type FetchRoleUseCaseResponse = Either<null, { role: Role[] }>
 
+@Injectable()
 export class FetchRoleUseCase {
   constructor(private roleRepository: RoleRepository) {}
 

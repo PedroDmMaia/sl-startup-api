@@ -18,7 +18,7 @@ describe('create deduction test', () => {
 
     await inMemoryDeductionRepository.create(deduction)
 
-    await sut.execute({ deductionId: deduction.id })
+    await sut.execute({ deductionId: deduction.id.toString() })
 
     expect(inMemoryDeductionRepository.items).toHaveLength(0)
   })

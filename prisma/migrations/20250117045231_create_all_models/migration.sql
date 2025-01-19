@@ -72,11 +72,11 @@ CREATE TABLE "role" (
 CREATE TABLE "users" (
     "id" TEXT NOT NULL,
     "employee_id" TEXT NOT NULL,
-    "user_name" TEXT NOT NULL,
     "password" TEXT NOT NULL,
     "is_active" BOOLEAN NOT NULL DEFAULT true,
     "crated_at" TIMESTAMP(3) NOT NULL DEFAULT CURRENT_TIMESTAMP,
     "updated_at" TIMESTAMP(3),
+    "email" TEXT NOT NULL,
 
     CONSTRAINT "users_pkey" PRIMARY KEY ("id")
 );
@@ -84,17 +84,25 @@ CREATE TABLE "users" (
 -- CreateTable
 CREATE TABLE "_BenefitRoles" (
     "A" TEXT NOT NULL,
-    "B" TEXT NOT NULL
+    "B" TEXT NOT NULL,
+
+    CONSTRAINT "_BenefitRoles_AB_pkey" PRIMARY KEY ("A","B")
 );
+
+-- CreateIndex
+CREATE UNIQUE INDEX "employee_cpf_key" ON "employee"("cpf");
+
+-- CreateIndex
+CREATE UNIQUE INDEX "employee_rg_key" ON "employee"("rg");
+
+-- CreateIndex
+CREATE UNIQUE INDEX "employee_email_key" ON "employee"("email");
 
 -- CreateIndex
 CREATE UNIQUE INDEX "users_employee_id_key" ON "users"("employee_id");
 
 -- CreateIndex
-CREATE UNIQUE INDEX "users_user_name_key" ON "users"("user_name");
-
--- CreateIndex
-CREATE UNIQUE INDEX "_BenefitRoles_AB_unique" ON "_BenefitRoles"("A", "B");
+CREATE UNIQUE INDEX "users_email_key" ON "users"("email");
 
 -- CreateIndex
 CREATE INDEX "_BenefitRoles_B_index" ON "_BenefitRoles"("B");
