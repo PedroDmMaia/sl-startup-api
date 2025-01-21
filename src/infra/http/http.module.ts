@@ -37,6 +37,8 @@ import { FetchEmployee } from './controllers/fetch-employee.contoller'
 import { FetchBenefit } from './controllers/fetch-benefit.controller'
 import { FetchRole } from './controllers/fetch-role.controller'
 import { FetchDeductionByEmployeeId } from './controllers/fetch-deduction-by-employeeId.controller'
+import { FetchBankUseCase } from '@/domain/sistem/application/use-case/fetch-bank-details.usecase'
+import { FetchBankDetails } from './controllers/fetch-bank-details.controller'
 
 @Module({
   imports: [DatabaseModule, cryptographyModule],
@@ -59,6 +61,7 @@ import { FetchDeductionByEmployeeId } from './controllers/fetch-deduction-by-emp
     FetchBenefit,
     FetchRole,
     FetchDeductionByEmployeeId,
+    FetchBankDetails,
   ],
   providers: [
     AuthenticateUserUseCase,
@@ -79,6 +82,7 @@ import { FetchDeductionByEmployeeId } from './controllers/fetch-deduction-by-emp
     UpdateBenefitUseCase,
     UpdateEmployeeUseCase,
     UpdateRoleUseCase,
+    FetchBankUseCase,
   ],
 })
 export class HttpModule {}

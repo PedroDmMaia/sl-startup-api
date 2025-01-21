@@ -7,7 +7,7 @@ import {
 } from '@nestjs/common'
 import { DeleteBenefitUseCase } from '@/domain/sistem/application/use-case/delete-benefit.usecase'
 
-@Controller('/benefit/delete/:id')
+@Controller('/benefits/delete/:id')
 export class DeleteBenefit {
   constructor(private deleteBenefitUseCase: DeleteBenefitUseCase) {}
   @Delete('')

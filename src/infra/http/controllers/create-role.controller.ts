@@ -3,6 +3,7 @@ import {
   Body,
   Controller,
   HttpCode,
+  Param,
   Post,
 } from '@nestjs/common'
 import { z } from 'zod'
@@ -10,7 +11,6 @@ import { ZodValidationPipe } from '../pipes/zod-validation.pipe'
 import { CreateRoleUseCase } from '@/domain/sistem/application/use-case/create-role.usecase'
 
 const createRoleBodySchema = z.object({
-  employeeId: z.string(),
   name: z.string(),
   pay: z.number(),
   description: z.string(),
@@ -23,21 +23,17 @@ type CreateRoleBodySchema = z.infer<typeof createRoleBodySchema>
 
 const bodyValidationPipe = new ZodValidationPipe(createRoleBodySchema)
 
-@Controller('/role')
+@Controller('/roles/:employeeId')
 export class CreateRole {
   constructor(private CceateRoleUseCase: CreateRoleUseCase) {}
-  @Post('/create')
+  @Post('')
   @HttpCode(201)
-  async handle(@Body(bodyValidationPipe) body: CreateRoleBodySchema) {
-    const {
-      employeeId,
-      name,
-      pay,
-      description,
-      hourlyRate,
-      weeklyHours,
-      benefitsIds,
-    } = body
+  async handle(
+    @Body(bodyValidationPipe) body: CreateRoleBodySchema,
+    @Param('employeeId') employeeId: string,
+  ) {
+    const { name, pay, description, hourlyRate, weeklyHours, benefitsIds } =
+      body
 
     const result = await this.CceateRoleUseCase.execute({
       employeeId,
