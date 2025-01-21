@@ -30,7 +30,7 @@ describe('create benefit test', () => {
       name: 'Vale transporte',
       value: 100,
       description: 'Transportation allowance for the employee',
-      conditions: ['Working days'],
+      conditions: 'Working days',
     })
 
     expect(result.isRight()).toBe(true)
@@ -41,7 +41,7 @@ describe('create benefit test', () => {
       expect(result.value.benefit.description).toBe(
         'Transportation allowance for the employee',
       )
-      expect(result.value.benefit.conditions).toEqual(['Working days'])
+      expect(result.value.benefit.conditions).toEqual('Working days')
     }
   })
 })
