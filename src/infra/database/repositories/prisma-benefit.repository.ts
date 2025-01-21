@@ -48,15 +48,24 @@ export class PrismaBenefitRepository implements BenefitRepository {
     return PrismaBenefitMapper.toDomain(benefit)
   }
 
-  async listAll({ page }: PaginationParams): Promise<Benefit[]> {
+  async SearchByName(
+    { page }: PaginationParams,
+    name?: string,
+  ): Promise<Benefit[]> {
     const benefits = await this.prisma.benefit.findMany({
+      where: {
+        name: {
+          contains: name,
+          mode: 'insensitive',
+        },
+      },
       orderBy: {
-        createdAt: 'desc',
+        createdAt: 'asc',
       },
       take: 20,
       skip: (page - 1) * 20,
     })
 
-    return benefits.map(PrismaBenefitMapper.toDomain)
+    return benefits.map((item) => PrismaBenefitMapper.toDomain(item))
   }
 }

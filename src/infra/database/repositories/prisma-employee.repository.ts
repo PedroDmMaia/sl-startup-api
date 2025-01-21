@@ -91,10 +91,19 @@ export class PrismaEmployeeRepository implements EmployeeRepository {
     return PrismaEmployeeMapper.toDomain(employee)
   }
 
-  async listAll({ page }: PaginationParams): Promise<Employee[]> {
+  async SearchByName(
+    { page }: PaginationParams,
+    name?: string,
+  ): Promise<Employee[]> {
     const employess = await this.prisma.employee.findMany({
+      where: {
+        name: {
+          contains: name,
+          mode: 'insensitive',
+        },
+      },
       orderBy: {
-        createdAt: 'desc',
+        createdAt: 'asc',
       },
       take: 20,
       skip: (page - 1) * 20,

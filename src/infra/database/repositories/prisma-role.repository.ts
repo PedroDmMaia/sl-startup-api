@@ -56,15 +56,24 @@ export class PrismaRoleRepository implements RoleRepository {
     return PrismaRoleMapper.toDomain(roleByEmployeeId)
   }
 
-  async listAll({ page }: PaginationParams): Promise<Role[]> {
-    const benefits = await this.prisma.role.findMany({
+  async SearchByName(
+    { page }: PaginationParams,
+    name?: string,
+  ): Promise<Role[]> {
+    const employess = await this.prisma.role.findMany({
+      where: {
+        name: {
+          contains: name,
+          mode: 'insensitive',
+        },
+      },
       orderBy: {
-        createdAt: 'desc',
+        createdAt: 'asc',
       },
       take: 20,
       skip: (page - 1) * 20,
     })
 
-    return benefits.map(PrismaRoleMapper.toDomain)
+    return employess.map((item) => PrismaRoleMapper.toDomain(item))
   }
 }
