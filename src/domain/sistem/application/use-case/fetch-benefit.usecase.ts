@@ -5,6 +5,7 @@ import { Injectable } from '@nestjs/common'
 
 interface FetchBenefitUseCaseResquest {
   page: number
+  name?: string
 }
 
 type FetchBenefitUseCaseResponse = Either<null, { benefit: Benefit[] }>
@@ -15,8 +16,9 @@ export class FetchBenefitUseCase {
 
   async execute({
     page,
+    name,
   }: FetchBenefitUseCaseResquest): Promise<FetchBenefitUseCaseResponse> {
-    const benefit = await this.benefitRepository.listAll({ page })
+    const benefit = await this.benefitRepository.SearchByName({ page }, name)
 
     return right({ benefit })
   }

@@ -5,6 +5,7 @@ import { Injectable } from '@nestjs/common'
 
 interface FetchRoleUseCaseResquest {
   page: number
+  name?: string
 }
 
 type FetchRoleUseCaseResponse = Either<null, { role: Role[] }>
@@ -15,8 +16,9 @@ export class FetchRoleUseCase {
 
   async execute({
     page,
+    name,
   }: FetchRoleUseCaseResquest): Promise<FetchRoleUseCaseResponse> {
-    const role = await this.roleRepository.listAll({ page })
+    const role = await this.roleRepository.SearchByName({ page }, name)
 
     return right({ role })
   }

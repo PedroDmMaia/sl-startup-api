@@ -6,5 +6,8 @@ export abstract class BenefitRepository {
   abstract update(benefit: Benefit): Promise<void>
   abstract delete(id: string): Promise<void>
   abstract findById(id: string): Promise<Benefit | null>
-  abstract listAll(params: PaginationParams): Promise<Benefit[]>
+  abstract SearchByName(
+    params: PaginationParams,
+    name?: string,
+  ): Promise<Benefit[]>
 }

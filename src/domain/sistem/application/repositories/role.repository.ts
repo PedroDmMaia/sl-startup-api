@@ -7,5 +7,8 @@ export abstract class RoleRepository {
   abstract delete(id: string): Promise<void>
   abstract findById(id: string): Promise<Role | null>
   abstract findByEmployeeId(employeeId: string): Promise<Role | null>
-  abstract listAll(params: PaginationParams): Promise<Role[]>
+  abstract SearchByName(
+    params: PaginationParams,
+    name?: string,
+  ): Promise<Role[]>
 }

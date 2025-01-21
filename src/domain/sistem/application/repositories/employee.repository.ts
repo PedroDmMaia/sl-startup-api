@@ -9,5 +9,8 @@ export abstract class EmployeeRepository {
   abstract findByCpf(cpf: string): Promise<Employee | null>
   abstract findByRg(rg: string): Promise<Employee | null>
   abstract findByEmail(email: string): Promise<Employee | null>
-  abstract listAll(params: PaginationParams): Promise<Employee[]>
+  abstract SearchByName(
+    params: PaginationParams,
+    name?: string,
+  ): Promise<Employee[]>
 }

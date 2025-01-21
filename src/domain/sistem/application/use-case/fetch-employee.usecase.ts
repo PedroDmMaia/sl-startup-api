@@ -5,6 +5,7 @@ import { Injectable } from '@nestjs/common'
 
 interface FetchEmployeeUseCaseResquest {
   page: number
+  name?: string
 }
 
 type FetchEmployeeUseCaseResponse = Either<null, { employee: Employee[] }>
@@ -15,8 +16,9 @@ export class FetchEmployeeUseCase {
 
   async execute({
     page,
+    name,
   }: FetchEmployeeUseCaseResquest): Promise<FetchEmployeeUseCaseResponse> {
-    const employee = await this.employeeRepository.listAll({ page })
+    const employee = await this.employeeRepository.SearchByName({ page }, name)
 
     return right({ employee })
   }
