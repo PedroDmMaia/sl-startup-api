@@ -9,6 +9,7 @@ CREATE TABLE "employee" (
     "is_active" BOOLEAN NOT NULL DEFAULT true,
     "crated_at" TIMESTAMP(3) NOT NULL DEFAULT CURRENT_TIMESTAMP,
     "updated_at" TIMESTAMP(3),
+    "password" TEXT NOT NULL,
 
     CONSTRAINT "employee_pkey" PRIMARY KEY ("id")
 );
@@ -69,19 +70,6 @@ CREATE TABLE "role" (
 );
 
 -- CreateTable
-CREATE TABLE "users" (
-    "id" TEXT NOT NULL,
-    "employee_id" TEXT NOT NULL,
-    "password" TEXT NOT NULL,
-    "is_active" BOOLEAN NOT NULL DEFAULT true,
-    "crated_at" TIMESTAMP(3) NOT NULL DEFAULT CURRENT_TIMESTAMP,
-    "updated_at" TIMESTAMP(3),
-    "email" TEXT NOT NULL,
-
-    CONSTRAINT "users_pkey" PRIMARY KEY ("id")
-);
-
--- CreateTable
 CREATE TABLE "_BenefitRoles" (
     "A" TEXT NOT NULL,
     "B" TEXT NOT NULL,
@@ -99,12 +87,6 @@ CREATE UNIQUE INDEX "employee_rg_key" ON "employee"("rg");
 CREATE UNIQUE INDEX "employee_email_key" ON "employee"("email");
 
 -- CreateIndex
-CREATE UNIQUE INDEX "users_employee_id_key" ON "users"("employee_id");
-
--- CreateIndex
-CREATE UNIQUE INDEX "users_email_key" ON "users"("email");
-
--- CreateIndex
 CREATE INDEX "_BenefitRoles_B_index" ON "_BenefitRoles"("B");
 
 -- AddForeignKey
@@ -115,9 +97,6 @@ ALTER TABLE "bank" ADD CONSTRAINT "bank_employee_id_fkey" FOREIGN KEY ("employee
 
 -- AddForeignKey
 ALTER TABLE "role" ADD CONSTRAINT "role_employee_id_fkey" FOREIGN KEY ("employee_id") REFERENCES "employee"("id") ON DELETE RESTRICT ON UPDATE CASCADE;
-
--- AddForeignKey
-ALTER TABLE "users" ADD CONSTRAINT "users_employee_id_fkey" FOREIGN KEY ("employee_id") REFERENCES "employee"("id") ON DELETE RESTRICT ON UPDATE CASCADE;
 
 -- AddForeignKey
 ALTER TABLE "_BenefitRoles" ADD CONSTRAINT "_BenefitRoles_A_fkey" FOREIGN KEY ("A") REFERENCES "benefit"("id") ON DELETE CASCADE ON UPDATE CASCADE;

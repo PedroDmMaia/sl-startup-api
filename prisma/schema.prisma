@@ -20,7 +20,7 @@ model Employee {
   password    String
   Bank        Bank[]
   deductions  Deduction[]
-  roles       Role?
+  roles       Role[]
 
   @@map("employee")
 }
@@ -67,7 +67,7 @@ model Bank {
 
 model Role {
   id          String    @id @default(uuid())
-  employeeId  String    @unique @map("employee_id")
+  employeeId  String    @map("employee_id")
   name        String
   pay         Float
   description String
