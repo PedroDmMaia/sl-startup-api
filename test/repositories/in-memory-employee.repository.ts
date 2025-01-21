@@ -52,9 +52,16 @@ export class InMemoryEmployeeRepository implements EmployeeRepository {
     return employee
   }
 
-  async listAll(params: PaginationParams): Promise<Employee[]> {
-    const employee = this.items.slice((params.page - 1) * 20, params.page * 20)
+  async SearchByName(
+    params: PaginationParams,
+    name?: string,
+  ): Promise<Employee[]> {
+    const filteredItems = name
+      ? this.items.filter((item) =>
+          item.name.trim().toLowerCase().startsWith(name.trim().toLowerCase()),
+        )
+      : this.items
 
-    return employee
+    return filteredItems.slice((params.page - 1) * 20, params.page * 20)
   }
 }

@@ -36,9 +36,13 @@ export class InMemoryRoleRepository implements RoleRepository {
     return role
   }
 
-  async listAll(params: PaginationParams): Promise<Role[]> {
-    const role = this.items.slice((params.page - 1) * 20, params.page * 20)
+  async SearchByName(params: PaginationParams, name?: string): Promise<Role[]> {
+    const filteredItems = name
+      ? this.items.filter((item) =>
+          item.name.trim().toLowerCase().startsWith(name.trim().toLowerCase()),
+        )
+      : this.items
 
-    return role
+    return filteredItems.slice((params.page - 1) * 20, params.page * 20)
   }
 }
