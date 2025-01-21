@@ -10,11 +10,14 @@ jobs:
     steps:
       - uses: actions/checkout@v3
 
-      - uses: actions/setup-node@v3
+      # Configurar o pnpm
+      - name: Set up pnpm
+        uses: pnpm/action-setup@v2
         with:
-          node-version: 18
-          cache: 'npm'
+          version: '8'  # ou a versão específica que você está usando
 
-      - run: npm ci
+      - name: Install dependencies with pnpm
+        run: pnpm install
 
-      - run: npm run test
+      - name: Run tests
+        run: pnpm run test
