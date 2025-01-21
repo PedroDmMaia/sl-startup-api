@@ -19,12 +19,12 @@ type CreateUserBodySchema = z.infer<typeof createUserBodySchema>
 
 const bodyValidationPipe = new ZodValidationPipe(createUserBodySchema)
 
-@Controller('/session')
+@Controller('/auth/session')
 @Public()
 export class AuthenticateUser {
   constructor(private authenticateUserUseCase: AuthenticateUserUseCase) {}
   @Post('')
-  @HttpCode(201)
+  @HttpCode(200)
   async handle(@Body(bodyValidationPipe) body: CreateUserBodySchema) {
     const { email, password } = body
 

@@ -20,7 +20,7 @@ type UpdateBankBodySchema = z.infer<typeof updateBankBodySchema>
 
 const bodyValidationPipe = new ZodValidationPipe(updateBankBodySchema)
 
-@Controller('/bank/:id')
+@Controller('/bank/:employeeId')
 export class UpdateBank {
   constructor(private updateBankUseCase: UpdateBankUseCase) {}
   @Put('')

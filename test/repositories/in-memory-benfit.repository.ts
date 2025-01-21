@@ -26,9 +26,16 @@ export class InMemoryBenefitRepository implements BenefitRepository {
     return benefit || null
   }
 
-  async listAll(params: PaginationParams): Promise<Benefit[]> {
-    const benefit = this.items.slice((params.page - 1) * 20, params.page * 20)
+  async SearchByName(
+    params: PaginationParams,
+    name?: string,
+  ): Promise<Benefit[]> {
+    const filteredItems = name
+      ? this.items.filter((item) =>
+          item.name.trim().toLowerCase().startsWith(name.trim().toLowerCase()),
+        )
+      : this.items
 
-    return benefit
+    return filteredItems.slice((params.page - 1) * 20, params.page * 20)
   }
 }

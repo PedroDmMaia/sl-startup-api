@@ -19,32 +19,46 @@ import { UpdateBenefitUseCase } from '@/domain/sistem/application/use-case/updat
 import { UpdateEmployeeUseCase } from '@/domain/sistem/application/use-case/update-employee.usecase'
 import { UpdateRoleUseCase } from '@/domain/sistem/application/use-case/update-role.usecase'
 import { cryptographyModule } from '../cryptography/cryptography.module'
-import { CreateEmployeeAccount } from './controllers/create-employee.controller'
+import { EmployeeAccountController } from './controllers/create-employee.controller'
 import { CreateRole } from './controllers/create-role.controller'
 import { AuthenticateUser } from './controllers/authenticate-user.controller'
-import { CreateBenefit } from './controllers/create-benefit.controller'
-import { CreateDeduction } from './controllers/create-deduction.controller'
+import { BenefitController } from './controllers/create-benefit.controller'
+import { DeductionController } from './controllers/create-deduction.controller'
 import { CreateBankDetails } from './controllers/create-bank-details.controller'
 import { UpdateEmployee } from './controllers/update-employee.controller'
 import { UpdateBenefit } from './controllers/update-benefit.controller'
 import { UpdateBank } from './controllers/update-bank.controller'
 import { UpdateRole } from './controllers/update-role.controller'
 import { DeleteEmployee } from './controllers/delete-employee.controller'
+import { DeleteRole } from './controllers/delete-role.controller'
+import { DeleteBenefit } from './controllers/delete-benefit.controller'
+import { DeleteDeduction } from './controllers/delete-deduction.controller'
+import { FetchEmployee } from './controllers/fetch-employee.contoller'
+import { FetchBenefit } from './controllers/fetch-benefit.controller'
+import { FetchRole } from './controllers/fetch-role.controller'
+import { FetchDeductionByEmployeeId } from './controllers/fetch-deduction-by-employeeId.controller'
 
 @Module({
   imports: [DatabaseModule, cryptographyModule],
   controllers: [
-    CreateEmployeeAccount,
+    EmployeeAccountController,
     CreateRole,
     AuthenticateUser,
-    CreateBenefit,
-    CreateDeduction,
+    BenefitController,
+    DeductionController,
     CreateBankDetails,
     UpdateEmployee,
     UpdateBenefit,
     UpdateBank,
     UpdateRole,
     DeleteEmployee,
+    DeleteRole,
+    DeleteBenefit,
+    DeleteDeduction,
+    FetchEmployee,
+    FetchBenefit,
+    FetchRole,
+    FetchDeductionByEmployeeId,
   ],
   providers: [
     AuthenticateUserUseCase,

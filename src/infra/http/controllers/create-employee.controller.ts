@@ -12,22 +12,22 @@ import { CreateEmployeeUseCase } from '@/domain/sistem/application/use-case/crea
 
 const createUserBodySchema = z.object({
   name: z.string(),
-  cpf: z.string().min(12).max(12),
-  rg: z.string().min(9).max(9),
+  cpf: z.string().length(12),
+  rg: z.string().length(9),
   email: z.string().email(),
   password: z.string(),
-  phoneNumber: z.string().min(12).max(12),
+  phoneNumber: z.string().length(12),
 })
 
 type CreateUserBodySchema = z.infer<typeof createUserBodySchema>
 
 const bodyValidationPipe = new ZodValidationPipe(createUserBodySchema)
 
-@Controller('/account')
+@Controller('/accounts/create')
 @Public()
-export class CreateEmployeeAccount {
+export class EmployeeAccountController {
   constructor(private createEmployeeUseCase: CreateEmployeeUseCase) {}
-  @Post('/create')
+  @Post('')
   @HttpCode(201)
   async handle(@Body(bodyValidationPipe) body: CreateUserBodySchema) {
     const { name, cpf, rg, email, password, phoneNumber } = body

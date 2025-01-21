@@ -5,11 +5,9 @@ import {
   HttpCode,
   Param,
 } from '@nestjs/common'
-import { Public } from '@/infra/auth/public'
 import { DeleteEmployeeUseCase } from '@/domain/sistem/application/use-case/delete-employee.usecase'
 
 @Controller('/account/delete/:id')
-@Public()
 export class DeleteEmployee {
   constructor(private deleteEmployeeUseCase: DeleteEmployeeUseCase) {}
   @Delete('')
