@@ -21,19 +21,21 @@ type CreateBenefitBodySchema = z.infer<typeof createBenefitBodySchema>
 
 const bodyValidationPipe = new ZodValidationPipe(createBenefitBodySchema)
 
-@Controller('/benefit/:employeeId')
+@Controller('/benefit/:roleId')
 export class BenefitController {
   constructor(private createBenefitUseCase: CreateBenefitUseCase) {}
   @Post('')
   @HttpCode(201)
   async handle(
     @Body(bodyValidationPipe) body: CreateBenefitBodySchema,
-    @Param('roleId') roleId: string[],
+    @Param('roleId') roleId: string,
   ) {
     const { name, value, description, conditions } = body
 
+    const roleIds = roleId.split(',')
+
     const result = await this.createBenefitUseCase.execute({
-      roleId,
+      roleId: roleIds,
       name,
       value,
       description,
