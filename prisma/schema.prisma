@@ -27,7 +27,7 @@ model Employee {
 
 model Benefit {
   id          String    @id @default(uuid())
-  name        String
+  name        String    @unique
   value       Float
   description String?
   conditions  String?
