@@ -1,10 +1,10 @@
-import { UniqueEntityid } from 'core/entities/unique-entity-id'
+import { UniqueEntityid } from '@/core/entities/unique-entity-id'
 import {
   Deductions,
   deductionsProps,
-} from 'domain/sistem/enterprise/entities/deduction'
-import { PrismaDeductionMapper } from 'infra/database/mappers/prisma-deduction.mapper'
-import { PrismaService } from 'infra/database/prisma/prisma.service'
+} from '@/domain/sistem/enterprise/entities/deduction'
+import { PrismaDeductionMapper } from '@/infra/database/mappers/prisma-deduction.mapper'
+import { PrismaService } from '@/infra/database/prisma/prisma.service'
 import { faker } from '@faker-js/faker'
 import { Injectable } from '@nestjs/common'
 

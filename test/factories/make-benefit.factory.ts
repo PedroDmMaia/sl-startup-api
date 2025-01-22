@@ -1,10 +1,10 @@
-import { UniqueEntityid } from 'core/entities/unique-entity-id'
+import { UniqueEntityid } from '@/core/entities/unique-entity-id'
 import {
   Benefit,
   benefitProps,
-} from 'domain/sistem/enterprise/entities/benefit'
-import { PrismaBenefitMapper } from 'infra/database/mappers/prisma-benefit.mapper'
-import { PrismaService } from 'infra/database/prisma/prisma.service'
+} from '@/domain/sistem/enterprise/entities/benefit'
+import { PrismaBenefitMapper } from '@/infra/database/mappers/prisma-benefit.mapper'
+import { PrismaService } from '@/infra/database/prisma/prisma.service'
 import { Injectable } from '@nestjs/common'
 
 export function MakeBenefit(

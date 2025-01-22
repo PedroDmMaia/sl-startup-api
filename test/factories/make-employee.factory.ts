@@ -1,10 +1,10 @@
-import { UniqueEntityid } from 'core/entities/unique-entity-id'
+import { UniqueEntityid } from '@/core/entities/unique-entity-id'
 import {
   Employee,
   employeeProps,
-} from 'domain/sistem/enterprise/entities/employee'
-import { PrismaEmployeeMapper } from 'infra/database/mappers/prisma-employee.mapper'
-import { PrismaService } from 'infra/database/prisma/prisma.service'
+} from '@/domain/sistem/enterprise/entities/employee'
+import { PrismaEmployeeMapper } from '@/infra/database/mappers/prisma-employee.mapper'
+import { PrismaService } from '@/infra/database/prisma/prisma.service'
 import { faker } from '@faker-js/faker'
 import { Injectable } from '@nestjs/common'
 
