@@ -1,7 +1,7 @@
-import { UniqueEntityid } from '@/core/entities/unique-entity-id'
-import { Bank, bankProps } from '@/domain/sistem/enterprise/entities/bank'
-import { PrismaBankMapper } from '@/infra/database/mappers/prisma-bank.mapper'
-import { PrismaService } from '@/infra/database/prisma/prisma.service'
+import { UniqueEntityid } from 'core/entities/unique-entity-id'
+import { Bank, bankProps } from 'domain/sistem/enterprise/entities/bank'
+import { PrismaBankMapper } from 'infra/database/mappers/prisma-bank.mapper'
+import { PrismaService } from 'infra/database/prisma/prisma.service'
 import { faker } from '@faker-js/faker'
 import { Injectable } from '@nestjs/common'
 

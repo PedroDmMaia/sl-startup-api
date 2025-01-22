@@ -1,7 +1,7 @@
-import { UniqueEntityid } from '@/core/entities/unique-entity-id'
-import { Role, roleProps } from '@/domain/sistem/enterprise/entities/role'
-import { PrismaRoleMapper } from '@/infra/database/mappers/prisma-role.mapper'
-import { PrismaService } from '@/infra/database/prisma/prisma.service'
+import { UniqueEntityid } from 'core/entities/unique-entity-id'
+import { Role, roleProps } from 'domain/sistem/enterprise/entities/role'
+import { PrismaRoleMapper } from 'infra/database/mappers/prisma-role.mapper'
+import { PrismaService } from 'infra/database/prisma/prisma.service'
 import { faker } from '@faker-js/faker'
 import { Injectable } from '@nestjs/common'
 
