@@ -7,11 +7,15 @@ export default defineConfig({
   test: {
     globals: true,
     root: './',
+    environment: 'node',
   },
   plugins: [
     tsConfigPaths(),
     swc.vite({
       module: { type: 'es6' },
+      jsc: {
+        target: 'esnext',
+      },
     }),
   ],
   resolve: {
