@@ -1,5 +1,5 @@
 import { UniqueEntityid } from '@/core/entities/unique-entity-id'
-import { Role } from '@/domain/sistem/enterprise/entities/Role'
+import { Role } from '@/domain/sistem/enterprise/entities/role'
 import {
   Benefit as PrismaBenefit,
   Prisma,
