@@ -1,5 +1,5 @@
 import { UniqueEntityid } from '@/core/entities/unique-entity-id'
-import { Deductions } from '@/domain/sistem/enterprise/entities/Deduction'
+import { Deductions } from '@/domain/sistem/enterprise/entities/deduction'
 import { Prisma, Deduction as PrismaDeduction } from '@prisma/client'
 
 export abstract class PrismaDeductionMapper {

@@ -1,5 +1,5 @@
 import { UniqueEntityid } from '@/core/entities/unique-entity-id'
-import { Employee } from '@/domain/sistem/enterprise/entities/Employee'
+import { Employee } from '@/domain/sistem/enterprise/entities/employee'
 import { Prisma, Employee as PrismaEmployee } from '@prisma/client'
 
 export abstract class PrismaEmployeeMapper {

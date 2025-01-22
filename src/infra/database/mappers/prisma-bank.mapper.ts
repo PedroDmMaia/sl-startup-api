@@ -1,5 +1,5 @@
 import { UniqueEntityid } from '@/core/entities/unique-entity-id'
-import { Bank } from '@/domain/sistem/enterprise/entities/Bank'
+import { Bank } from '@/domain/sistem/enterprise/entities/bank'
 import { Prisma, Bank as PrismaBank } from '@prisma/client'
 
 export abstract class PrismaBankMapper {
