@@ -54,7 +54,7 @@ model Deduction {
 
 model Bank {
   id            String    @id @default(uuid())
-  employeeId    String    @map("employee_id")
+  employeeId    String    @unique @map("employee_id")
   bankName      String
   agencyNumber  String
   accountNumber String
