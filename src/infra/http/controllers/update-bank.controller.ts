@@ -27,7 +27,7 @@ export class UpdateBank {
   @HttpCode(204)
   async handle(
     @Body(bodyValidationPipe) body: UpdateBankBodySchema,
-    @Param('id') employeeId: string,
+    @Param('employeeId') employeeId: string,
   ) {
     const { bankName, agencyNumber, accountNumber } = body
 

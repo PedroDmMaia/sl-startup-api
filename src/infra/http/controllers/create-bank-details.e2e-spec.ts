@@ -39,8 +39,10 @@ describe('Create bank details (E2E)', () => {
       sub: employee.id.toString(),
     })
 
+    const employeeId = employee.id.toString()
+
     const response = await request(app.getHttpServer())
-      .post(`/employees/${employee.id.toString()}/bank-details`)
+      .post(`/employees/${employeeId}/bank-details`)
       .set('Authorization', `Bearer ${accessToken}`)
       .send({
         bankName: 'Any Bank',

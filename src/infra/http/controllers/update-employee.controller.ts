@@ -24,14 +24,14 @@ type UpdateUserBodySchema = z.infer<typeof updateUserBodySchema>
 
 const bodyValidationPipe = new ZodValidationPipe(updateUserBodySchema)
 
-@Controller('/employee/:id')
+@Controller('/employee/:employeeId')
 export class UpdateEmployee {
   constructor(private updateEmployeeUseCase: UpdateEmployeeUseCase) {}
   @Put('')
   @HttpCode(204)
   async handle(
     @Body(bodyValidationPipe) body: UpdateUserBodySchema,
-    @Param('id') employeeId: string,
+    @Param('employeeId') employeeId: string,
   ) {
     const { name, cpf, rg, email, password, phoneNumber, isActive } = body
 

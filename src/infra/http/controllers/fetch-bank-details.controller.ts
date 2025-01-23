@@ -2,7 +2,7 @@ import { BadRequestException, Controller, Get, Param } from '@nestjs/common'
 import { FetchBankUseCase } from '@/domain/sistem/application/use-case/fetch-bank-details.usecase'
 import { bankPresenter } from '../presenters/bank.presenter'
 
-@Controller('/bank/list')
+@Controller('/bank/list/:employeeId')
 export class FetchBankDetails {
   constructor(private fetchBankUseCase: FetchBankUseCase) {}
   @Get('')

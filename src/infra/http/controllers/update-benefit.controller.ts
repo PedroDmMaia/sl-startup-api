@@ -21,14 +21,14 @@ type UpdateBenefitBodySchema = z.infer<typeof updateBenefitBodySchema>
 
 const bodyValidationPipe = new ZodValidationPipe(updateBenefitBodySchema)
 
-@Controller('/benefit/:employeeId')
+@Controller('/benefit/:benefitId')
 export class UpdateBenefit {
   constructor(private updateBenefitUseCase: UpdateBenefitUseCase) {}
   @Put('')
   @HttpCode(204)
   async handle(
     @Body(bodyValidationPipe) body: UpdateBenefitBodySchema,
-    @Param('id') benefitId: string,
+    @Param('benefitId') benefitId: string,
   ) {
     const { name, value, description, conditions } = body
 

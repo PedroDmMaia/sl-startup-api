@@ -6,14 +6,12 @@ import { AppModule } from '@/infra/app.module'
 import { DatabaseModule } from '@/infra/database/databse.module'
 import request from 'supertest'
 import { JwtService } from '@nestjs/jwt'
-import { PrismaService } from '@/infra/database/prisma/prisma.service'
 
 describe('Create benefit (E2E)', () => {
   let app: INestApplication
   let employeeFactory: EmployeeFactory
   let roleFactory: RoleFactory
   let jwt: JwtService
-  let prisma: PrismaService
 
   beforeAll(async () => {
     const moduleRef = await Test.createTestingModule({
@@ -26,7 +24,6 @@ describe('Create benefit (E2E)', () => {
     employeeFactory = moduleRef.get(EmployeeFactory)
     roleFactory = moduleRef.get(RoleFactory)
     jwt = moduleRef.get(JwtService)
-    prisma = moduleRef.get(PrismaService)
 
     await app.init()
   })
@@ -52,16 +49,17 @@ describe('Create benefit (E2E)', () => {
       sub: employee.id.toString(),
     })
 
+    const roleId1 = role.id.toString()
+    const roleId2 = role2.id.toString()
+
     const response = await request(app.getHttpServer())
-      .post(`/benefit/${role.id.toString()},${role2.id.toString()}`)
+      .post(`/benefit/${roleId1},${roleId2}`)
       .set('Authorization', `Bearer ${accessToken}`)
       .send({
         name: 'vale transporte',
         value: 280,
         conditions: 'usar transporte publico',
       })
-
-    console.log(role)
 
     expect(response.statusCode).toBe(201)
   })
