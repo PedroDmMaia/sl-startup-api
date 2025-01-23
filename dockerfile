@@ -37,4 +37,4 @@ ENV JWT_PUBLIC_KEY='SEU_PUBLIC_KEY'
 EXPOSE 3000
 
 # Comando para inicializar a aplicação
-CMD ["node", "dist/index.js"]
+CMD ["node", "dist/src/infra/main.js"]
