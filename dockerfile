@@ -4,7 +4,7 @@ FROM node:20-alpine AS builder
 # Configuração do diretório de trabalho
 WORKDIR /app
 
-# Copiar arquivos necessários
+# Copiar arquivos necessários para instalação das dependências
 COPY package.json pnpm-lock.yaml ./
 
 # Instalar o pnpm globalmente e as dependências do projeto
@@ -29,9 +29,12 @@ COPY --from=builder /app/prisma ./prisma
 
 # Configuração de variáveis de ambiente
 ENV NODE_ENV=production
-ENV DATABASE_URL=postgresql://postgres:docker@localhost:5432/sl-postgres?schema=public
-ENV JWT_PRIVATE_KEY='SEU_PRIVATE_KEY'
-ENV JWT_PUBLIC_KEY='SEU_PUBLIC_KEY'
+
+# Variáveis específicas do Supabase (substitua pelos valores reais)
+ENV DATABASE_URL=<SUA_DATABASE_URL>
+ENV SUPABASE_SERVICE_ROLE_KEY=<SEU_SUPABASE_SERVICE_ROLE_KEY>
+ENV JWT_PRIVATE_KEY='<SUA_CHAVE_PRIVADA_JWT>'
+ENV JWT_PUBLIC_KEY='<SUA_CHAVE_PUBLICA_JWT>'
 
 # Expor a porta da aplicação
 EXPOSE 3000
