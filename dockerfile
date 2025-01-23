@@ -5,7 +5,7 @@ FROM node:20-alpine AS builder
 WORKDIR /app
 
 # Instalar o OpenSSL e ferramentas básicas
-RUN apk add --no-cache openssl1.1-compat
+RUN apk add --no-cache openssl
 
 # Copiar arquivos necessários para instalação das dependências
 COPY package.json pnpm-lock.yaml ./
@@ -26,7 +26,7 @@ FROM node:20-alpine
 WORKDIR /app
 
 # Instalar o OpenSSL
-RUN apk add --no-cache openssl1.1-compat
+RUN apk add --no-cache openssl
 
 # Copiar apenas os arquivos necessários da etapa de build
 COPY --from=builder /app/node_modules ./node_modules
@@ -38,7 +38,7 @@ ENV NODE_ENV=production
 ENV DATABASE_URL=postgresql://postgres:docker@localhost:5432/sl-postgres?schema=public
 ENV JWT_PRIVATE_KEY='SEU_PRIVATE_KEY'
 ENV JWT_PUBLIC_KEY='SEU_PUBLIC_KEY'
-ENV PRISMA_CLI_QUERY_ENGINE_TYPE=openssl-1.1.x
+ENV PRISMA_CLI_QUERY_ENGINE_TYPE=openssl
 
 # Expor a porta da aplicação
 EXPOSE 3000
