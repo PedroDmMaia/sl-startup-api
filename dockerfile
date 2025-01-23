@@ -44,4 +44,4 @@ ENV PRISMA_CLI_QUERY_ENGINE_TYPE=openssl
 EXPOSE 3000
 
 # Comando para inicializar a aplicação
-CMD ["node", "dist/src/infra/main.js"]
+CMD ["sh", "-c", "npx prisma migrate deploy && node dist/src/infra/main.js"]
