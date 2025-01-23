@@ -34,10 +34,12 @@ COPY --from=builder /app/dist ./dist
 COPY --from=builder /app/prisma ./prisma
 
 # Configuração de variáveis de ambiente
+# Evite expor sensíveis diretamente aqui, como o DATABASE_URL, JWT_PRIVATE_KEY e JWT_PUBLIC_KEY
+# Abaixo, você pode usar variáveis para conectar com um arquivo .env
+# A leitura de variáveis de ambiente pode ser feita em tempo de execução, por exemplo, usando Docker Compose ou com `docker run`
+
+# Exemplo de variáveis para o Prisma em produção
 ENV NODE_ENV=production
-ENV DATABASE_URL=postgresql://postgres:docker@localhost:5432/sl-postgres?schema=public
-ENV JWT_PRIVATE_KEY='SEU_PRIVATE_KEY'
-ENV JWT_PUBLIC_KEY='SEU_PUBLIC_KEY'
 ENV PRISMA_CLI_QUERY_ENGINE_TYPE=openssl
 
 # Expor a porta da aplicação
