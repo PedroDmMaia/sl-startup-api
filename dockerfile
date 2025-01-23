@@ -4,11 +4,11 @@ FROM node:20-alpine AS builder
 # Configuração do diretório de trabalho
 WORKDIR /app
 
-# Copiar arquivos necessários para instalação das dependências
-COPY package.json pnpm-lock.yaml ./
-
 # Instalar o pnpm globalmente e as dependências do projeto
 RUN npm install -g pnpm && pnpm install --frozen-lockfile
+
+# Copiar arquivos necessários para instalação das dependências
+COPY package.json pnpm-lock.yaml ./
 
 # Copiar todos os arquivos do projeto
 COPY . .
