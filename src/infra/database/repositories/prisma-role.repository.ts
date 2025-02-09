@@ -60,11 +60,17 @@ export class PrismaRoleRepository implements RoleRepository {
     { page }: PaginationParams,
     name?: string,
   ): Promise<Role[]> {
-    const employess = await this.prisma.role.findMany({
+    const roles = await this.prisma.role.findMany({
       where: {
-        name: {
-          contains: name,
-          mode: 'insensitive',
+        // name: {
+        //   contains: name,
+        //   mode: 'insensitive',
+        // },
+        employee: {
+          name: {
+            contains: name,
+            mode: 'insensitive',
+          },
         },
       },
       orderBy: {
@@ -74,6 +80,6 @@ export class PrismaRoleRepository implements RoleRepository {
       skip: (page - 1) * 20,
     })
 
-    return employess.map((item) => PrismaRoleMapper.toDomain(item))
+    return roles.map((item) => PrismaRoleMapper.toDomain(item))
   }
 }

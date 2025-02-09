@@ -12,6 +12,7 @@ export abstract class PrismaEmployeeMapper {
         email: raw.email,
         password: raw.password,
         phoneNumber: raw.phoneNumber,
+        isActive: raw.isActive,
       },
       new UniqueEntityid(raw.id),
     )
@@ -26,6 +27,7 @@ export abstract class PrismaEmployeeMapper {
       email: employee.email,
       password: employee.password,
       phoneNumber: employee.phoneNumber,
+      isActive: employee.isActive,
     }
   }
 }

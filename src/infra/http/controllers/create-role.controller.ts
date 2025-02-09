@@ -9,6 +9,8 @@ import {
 import { z } from 'zod'
 import { ZodValidationPipe } from '../pipes/zod-validation.pipe'
 import { CreateRoleUseCase } from '@/domain/sistem/application/use-case/create-role.usecase'
+import { ApiBody, ApiOperation, ApiResponse, ApiTags } from '@nestjs/swagger'
+import { CreateRoleDTO } from '@/domain/sistem/application/DTO/create-role.dto'
 
 const createRoleBodySchema = z.object({
   name: z.string(),
@@ -23,11 +25,16 @@ type CreateRoleBodySchema = z.infer<typeof createRoleBodySchema>
 
 const bodyValidationPipe = new ZodValidationPipe(createRoleBodySchema)
 
+@ApiTags('Crete-Role')
 @Controller('/roles/:employeeId')
 export class CreateRole {
   constructor(private CceateRoleUseCase: CreateRoleUseCase) {}
   @Post('')
   @HttpCode(201)
+  @ApiOperation({ summary: 'Criar um cargo' })
+  @ApiBody({ type: CreateRoleDTO, description: 'Dados para criar um cargo' })
+  @ApiResponse({ status: 200, description: 'Cargo criado com sucesso' })
+  @ApiResponse({ status: 404, description: 'Dados Inválidos' })
   async handle(
     @Body(bodyValidationPipe) body: CreateRoleBodySchema,
     @Param('employeeId') employeeId: string,

@@ -3,9 +3,8 @@ generator client {
 }
 
 datasource db {
-  provider  = "postgresql"
-  url       = env("DATABASE_URL")
-  directUrl = env("DIRECT_URL")
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
 }
 
 model Employee {
@@ -48,7 +47,7 @@ model Deduction {
   description String
   createdAt   DateTime  @default(now()) @map("crated_at")
   updatedAt   DateTime? @updatedAt @map("updated_at")
-  employee    Employee  @relation(fields: [employeeId], references: [id])
+  employee    Employee  @relation(fields: [employeeId], references: [id], onDelete: Cascade)
 
   @@map("deduction")
 }

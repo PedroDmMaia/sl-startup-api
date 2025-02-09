@@ -36,16 +36,17 @@ export class CreateBenefitUseCase {
     // in which functions the benefit will be attributed
     const roles = await Promise.all(
       roleId.map(async (id) => {
-        const role = await this.roleRepository.findById(id.toString())
+        const role = await this.roleRepository.findById(id)
         return role || null
       }),
     )
-
+    
     const invalidRoles = roles.filter((role) => role === null)
-
+    
     if (invalidRoles.length > 0) {
       return left(new InvalidRolesError())
     }
+
 
     const benefit = Benefit.create({
       roleId: roleId.map((item) => new UniqueEntityid(item)),

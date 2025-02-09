@@ -12,7 +12,7 @@ interface UpdateEmployeeUseCaseRequest {
   cpf: string
   rg: string
   email: string
-  password: string
+  password?: string
   phoneNumber: string
   isActive: boolean
 }
@@ -67,13 +67,15 @@ export class UpdateEmployeeUseCase {
       return left(new UserWithSameInformationError())
     }
 
-    const hashedPassword = await this.hashGenator.hash(password)
+    if (password) {
+      const hashedPassword = await this.hashGenator.hash(password)
+      employee.password = hashedPassword
+    }
 
     employee.name = name
     employee.cpf = cpf
     employee.rg = rg
     employee.email = email
-    employee.password = hashedPassword
     employee.phoneNumber = phoneNumber
     employee.isActive = isActive
 
